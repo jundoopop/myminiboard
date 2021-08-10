@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Editor</title>
@@ -7,25 +7,25 @@
 <body>
 <h2>Editor</h2>
 <div>
-    <form action="#" th:action="@{/editPage}" th:object="${form_edited}" method="post">
+    <form action="#" th:action="@{/editor}" th:object="${pf}" method="post">
         <div>
             <label>Username
-                <input type="text" name="username" id="username" th:field="*{username}"/>
+                <input required type="text" name="username" id="username" th:value="" th:field="*{username}"/>
             </label>
         </div>
         <div>
             <label>password
-                <input type="text" name="password" id="password" th:field="*{password}"/>
-            </label>
+                <input required type="text" name="password" id="password" th:field="*{password}"/>
+            </label>`
         </div>
         <div>
             <label>title
-                <input type="text" name="title" id="title" th:field="*{title}"/>
+                <input required type="text" name="title" id="title" th:field="*{title}"/>
             </label>
         </div>
         <div>
             <label>content
-                <input type="text" name="content" id="content" th:field="*{content}"/>
+                <input required type="text" name="content" id="content" th:field="*{content}"/>
             </label>
         </div>
         <div>
