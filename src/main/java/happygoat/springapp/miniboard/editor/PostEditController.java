@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Controller
 public class PostEditController {
@@ -18,33 +19,36 @@ public class PostEditController {
 
     @GetMapping("/editor")
     public String getEditor(Model model) {
+        model.addAttribute("pf", new postForm());
 
         return "editor";
     }
 
 
-    @ModelAttribute("pf")
     @PostMapping("/editor")
-    public String setForm(Model model, @RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("title") String title, @RequestParam("content") String content) {
+    public String setForm(Model model, @ModelAttribute postForm pf, @RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("title") String title, @RequestParam("content") String content) {
 
-        postForm pf = new postForm();
-        postModel newPost = new postModel();
+        postModel pm = new postModel();
 
         pf.setUsername(username);
         pf.setPassword(password);
-        pf.setTitle(title);
         pf.setContent(content);
-        pf.setLast_updated(LocalDateTime.now());
+        pf.setTitle(title);
+
         model.addAttribute("pf", pf);
 
-        newPost.setTitle(pf.getTitle());
-        newPost.setUsername(pf.getUsername());
-        newPost.setPassword(pf.getPassword());
-        newPost.setContent(pf.getContent());
-        newPost.setLast_updated(pf.getLast_updated());
-        pr.save(newPost);
+        ZoneId krtime = ZoneId.of("GMT+9");
+        LocalDateTime realtime = LocalDateTime.now(krtime);
+
+        pm.setTitle(pf.getTitle());
+        pm.setUsername(pf.getUsername());
+        pm.setPassword(pf.getPassword());
+        pm.setContent(pf.getContent());
+        pm.setLast_updated(realtime);
+        pr.save(pm);
 
         return "uploaded";
     }
+
 
 }
